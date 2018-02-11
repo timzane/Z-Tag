@@ -8,12 +8,8 @@ import os
 import unicodedata
 import argparse
 
-
-# from filenames import *
-# from PageClass import *
 from DBToolsClass import *
 from sys import platform as _platform
-from random import *
 
 def get_platform():
 

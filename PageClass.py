@@ -617,8 +617,8 @@ class PageFileOps(tk.Frame):
         deletechoice2 = tk.Radiobutton(self.labelactioncontainerdelete, text="Delete", variable=self.var, value=2)
 
         # delete_file.grid(column=1, row=3, sticky="ew", in_=self.labelactioncontainerdelete)
-        deletechoice1.grid(column=1, row=3, sticky="ew", in_=self.labelactioncontainerdelete)
-        deletechoice2.grid(column=2, row=3, sticky="ew", in_=self.labelactioncontainerdelete)
+        deletechoice1.grid(column=1, row=3, sticky="w", in_=self.labelactioncontainerdelete)
+        deletechoice2.grid(column=2, row=3, sticky="w", in_=self.labelactioncontainerdelete)
 
         batch_rename_button = tk.Button(self, text='Batch Rename')
         batch_rename_button.bind('<Button-1>', self.batch_rename)
