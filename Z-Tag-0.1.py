@@ -3,7 +3,7 @@
 
 import sqlite3
 import sys
-# import re
+# import re # 
 # import os
 # import unicodedata
 import argparse
@@ -36,8 +36,6 @@ class MultiColumnListbox(object):
     MainCategory = None
     CurrentFrame = ""
     StopImport = False
-    # ImportDir = read_config_file("Ztag", "importlocation")
-    # DefaultRootDir = read_config_file("Ztag", "DefaultRootDir")
     DBDirectory = None
     progress = 1.0
 

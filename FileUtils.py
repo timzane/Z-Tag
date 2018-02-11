@@ -4,42 +4,6 @@ import sqlite3
 import configparser
 import re
 
-# def check_config_file():
-#
-#
-#
-#     config_dir=os.getenv("HOME") + "/.config/ztag/"
-#     config_file=config_dir + "config.ini"
-#
-#     print ("Checking..",config_file)
-#     if os.path.isfile(config_file):
-#         print ("File Exists")
-#
-#     else:
-#
-#         print("First Check if dir exists")
-#         try:
-#             os.stat(config_dir)
-#         except:
-#             os.mkdir(config_dir)
-#
-#
-#         print("File Does not exist ...Creating")
-#         config = configparser.RawConfigParser()
-#
-#         # When adding sections or items, add them in the reverse order of
-#         # how you want them to be displayed in the actual file.
-#
-#
-#         config.add_section('Ztag')
-#         config.set('Ztag', 'Version', '0.1.0')
-#         config.set('Ztag', 'rootDir', '/home2/Media/2017')
-#
-#
-#         # Writing the config file
-#         with open(config_file, 'w') as configfile:
-#             config.write(configfile)
-                
 def read_config_file(Section, Parameter):
 
     config_file=os.getenv("HOME") + "/.config/ztag/config.ini"

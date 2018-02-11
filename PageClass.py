@@ -163,6 +163,7 @@ class MainPage(tk.Frame):
 
         print("Search Type: ", self.controller.buttoncontainer.frames["MainPage"].combosearchtype.get())
         self.controller.fill_tree_from_sql(self.entryfield.get(), self.combosearchtype.get())
+
     def remove_tag(self, event):
 
         item = self.controller.tree.selection()
@@ -274,13 +275,18 @@ class PageDuplicate(tk.Frame):
 
     def __init__(self, parent, controller):
 
+
         self.maincatdict = {}
         self.combotagdict = {}  
 
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        # labelmenucontainer = MenuContainer(self,controller,1)
+        # # Menu Buttons
+        self.labelmenucontainerfo = MenuContainer(self, controller, 1)
+        self.labelmenucontainerfo.grid(column=0, row=6, columnspan=5, sticky='ew')
+
+
         filterb1 = tk.Button(self, text='Filter Duplicates')
 
         filterb1.bind('<Button-1>', self.find_duplicates)
@@ -676,7 +682,6 @@ class PageFileOps(tk.Frame):
         self.apply_rename.bind('<Button-1>', self.batch_rename)
         self.apply_rename.grid(column=2, row=5, columnspan=2, sticky='ew', in_=self.batchrenamecontainer)
         self.apply_rename.extra = "Apply"
-
 
     def test(self):
         print("hello")
