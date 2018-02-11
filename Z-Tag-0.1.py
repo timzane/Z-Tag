@@ -3,10 +3,12 @@
 
 import sqlite3
 import sys
-import re
-import os
-import unicodedata
+# import re
+# import os
+# import unicodedata
 import argparse
+
+# test
 
 from DBToolsClass import *
 from sys import platform as _platform
@@ -30,13 +32,12 @@ TagTreeColumns = ["Index", "Tag", "Category", "Filter Count"]
 
 
 class MultiColumnListbox(object):
-    """use a ttk.TreeView as a multicolumn ListBox"""
-    # Rename_file = ""
+
     MainCategory = None
     CurrentFrame = ""
     StopImport = False
-    ImportDir = read_config_file("Ztag", "importlocation")
-    DefaultRootDir = read_config_file("Ztag", "DefaultRootDir")
+    # ImportDir = read_config_file("Ztag", "importlocation")
+    # DefaultRootDir = read_config_file("Ztag", "DefaultRootDir")
     DBDirectory = None
     progress = 1.0
 
