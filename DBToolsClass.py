@@ -857,33 +857,25 @@ class DBFileListing:
 
     def query_filter_from_tag_id(self, tag_id):
 
-            cursorcategory = self.db.cursor()
             sql1 = ('select  tblTagFilters.Filter from tblTagFilters '
                     'Inner Join tblTag2Filter on tblTag2Filter.FilterID =tblTagFilters.ID '
                     'where tblTag2Filter.TagID=?')
-            cursorcategory.execute(sql1, (tag_id,))
-            result = cursorcategory.fetchall()
+            self.cursor.execute(sql1, (tag_id,))
+            result = self.cursor.fetchall()
             return result
 
     def query_category_output2list(self, file_id):
-            # Get Tags associated with this item from joining table
-            # Returns a list of categories in format to add to tree
 
-            cursorcategory = self.db.cursor()
+            # Get Tags associated with this item from joining table
             categoryquery = "Select tblTags.TagName from tblfile2tag Inner Join tblTags" \
-                            " on tblfile2tag.TagID = tblTags.TagID where FileID =" + str(file_id)
-            cursorcategory.execute(categoryquery)
-            allcategories = cursorcategory.fetchall()
+                            " on tblfile2tag.TagID = tblTags.TagID where FileID = ?"
+            self.cursor.execute(categoryquery,(file_id,))
+            allcategories = self.cursor.fetchall()
             allcats = ""
             for item123 in allcategories:
                     allcats = allcats + str(item123[0]) + ","
             allcats = allcats[:-1]
-
-            # Do some converting from strings and stuff to get a new tuple
-            tempstring = list()
-            tempstring.append(allcats)
-
-            return tempstring
+            return (allcats,)
 
     def query_maincategory_output2list(self, tag_id):
 
@@ -1025,8 +1017,8 @@ class DBFileListing:
             return False
 
     def get_file_info(self, dirName, fname, md5hashtype="partial"):
-        fileandpath = dirName + "/" + fname
-
+        # fileandpath = dirName + "/" + fname
+        fileandpath = os.path.join(dirName,fname)
         if os.path.isfile(fileandpath):
             filesizef = os.path.getsize(fileandpath)
             modtimesec = os.path.getmtime(fileandpath)
