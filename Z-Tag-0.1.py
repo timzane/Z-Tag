@@ -3,7 +3,7 @@
 
 import sqlite3
 import sys
-# import re # 
+# import re #
 # import os
 # import unicodedata
 import argparse
