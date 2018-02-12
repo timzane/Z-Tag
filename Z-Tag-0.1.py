@@ -33,6 +33,7 @@ TagTreeColumns = ["Index", "Tag", "Category", "Filter Count"]
 
 class MultiColumnListbox(object):
 
+    #TEST
     MainCategory = None
     CurrentFrame = ""
     StopImport = False
