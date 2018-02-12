@@ -842,7 +842,8 @@ class Import(tk.Frame):
         self.importlabel = tk.Label(self, text="Import Dir", relief="groove")
         self.importlabel.grid(column=0, row=3)
 
-        importdir = read_config_file("Ztag", "importlocation")
+        # importdir = read_config_file("Ztag", "importlocation")
+        importdir = self.controller.filedb.get_default_parameter("ImportDir")
         self.importdir = tk.Label(self, text=importdir)
         self.importdir.grid(column=1, row=3)
         self.rootDirCombo = ttk.Combobox(self)

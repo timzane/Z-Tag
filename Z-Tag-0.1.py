@@ -70,9 +70,10 @@ class MultiColumnListbox(object):
     def add_importdir_dialog(self):
 
         searchdir = tk.filedialog.askdirectory(initialdir = os.getenv("HOME"))
-        self.ImportDir = searchdir
+        # self.ImportDir = searchdir
+        self.filedb.set_default_parameter("ImportDir",searchdir)
         self.buttoncontainer.frames["Import"].importdir.config(text=searchdir)
-        write_config_file("Ztag", "ImportLocation", searchdir)
+        # write_config_file("Ztag", "ImportLocation", searchdir)
 
     def add_db_dialog(self):
         self.DBDirectory = tk.filedialog.askopenfilename()

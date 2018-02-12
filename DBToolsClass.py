@@ -308,8 +308,8 @@ class DBFileListing:
 
     def rename_operation(self, olddir, oldfile, newdir,newfile):
 
-        old = olddir + oldfile
-        new = newdir + newfile
+        old = os.path.join(olddir,oldfile)
+        new = os.path.join(newdir,newfile)
 
         oldflag = os.path.isfile(old)
         newflag = os.path.isfile(new)
@@ -332,13 +332,26 @@ class DBFileListing:
             else:
                 return "Error"
 
+    def set_default_parameter(self, parameter, value):
+
+        if self.get_default_parameter(parameter) == False:
+            self.cursor.execute('''insert into  tblDefaults (Parameter,Value) Values(?,?) ''', (parameter,value))
+            self.db.commit()
+        else:
+            sql1 = "UPDATE tblDefaults set Value = ?  WHERE Parameter = ?"
+            self.cursor.execute(sql1, (value, parameter))
+            self.db.commit()
+
     def get_default_parameter(self, parameter):
 
         query = '''select Value from tblDefaults where Parameter = ?'''
-        self.cursor.execute(query,(parameter,))
+        rows_count = self.cursor.execute(query,(parameter,))
         result = self.cursor.fetchone()
-        directory = result[0]
-        return directory
+        if result is not None:
+            directory = result[0]
+            return directory
+        else:
+            return False
 
     def remove_filedb_linked_tags(self,file_id):
         None
@@ -362,6 +375,7 @@ class DBFileListing:
         else:
             print("Error:", flag
                   )
+
     def delete_all_tags(self, file_id):
 
         # Delete All Tags
@@ -1063,7 +1077,8 @@ class DBFileListing:
 
             [subdirList.remove(d) for d in list(subdirList) if d in exclude]
 
-            searchdir = dirName + "/"
+            # searchdir = dirName + "/"
+            searchdir = dirName
             print("Search Dir is: ", searchdir)
             fnamecount = 0
             for fname in fileList:
