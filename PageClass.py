@@ -869,13 +869,12 @@ class Import(tk.Frame):
             dry_run = True
         else:
             dry_run = False
-            print("HideS Values")
 
-        if self.controller.ImportDir is None:
+        import_dir = self.controller.filedb.get_default_parameter("ImportDir")
+        if import_dir is None:
             print("Nothing Selected")
         else:
-            print(self.controller.ImportDir)
-            print("About to run import:", dry_run)
+            print(import_dir)
             comboindex = self.controller.buttoncontainer.frames["Import"].rootDirCombo.current()
-            self.controller.filedb.import_filenames(self.controller.ImportDir,
+            self.controller.filedb.import_filenames(import_dir,
                                                     self.controller.buttoncontainer.frames["Import"].rootDirDict[comboindex],  dry_run)

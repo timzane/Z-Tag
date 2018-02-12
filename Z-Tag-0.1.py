@@ -3,9 +3,6 @@
 
 import sqlite3
 import sys
-# import re #
-# import os
-# import unicodedata
 import argparse
 
 # test
@@ -33,7 +30,6 @@ TagTreeColumns = ["Index", "Tag", "Category", "Filter Count"]
 
 class MultiColumnListbox(object):
 
-    #TEST
     MainCategory = None
     CurrentFrame = ""
     StopImport = False

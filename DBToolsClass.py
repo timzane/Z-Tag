@@ -587,25 +587,25 @@ class DBFileListing:
         if idnum is not None:
             return idnum
 
-    def is_file_in_db_newlocation_delete(self, filename, md5hashpartial, filesize, md5hashtype="partial"):
-
-        if md5hashtype == "partial":
-            sql1 = '''SELECT fileID, filename,(tblRootDir.DirName || filedirlocal) as filedir FROM tblfilelisting
-                                inner join tblRootDir on tblfilelisting.rootDir = tblRootDir.ID
-                                WHERE filename=? AND md5hash_partial =? and filesize = ?'''
-        else:
-            sql1 = '''SELECT fileID, filename,(tblRootDir.DirName || filedirlocal) as filedir FROM tblfilelisting
-                                inner join tblRootDir on tblfilelisting.rootDir = tblRootDir.ID
-                                WHERE filename=? AND md5hash_full =? and filesize = ?'''
-
-        self.cursor.execute(sql1, (filename, md5hashpartial, filesize))
-        idnum = self.cursor.fetchone()
-        if idnum is not None:
-            print("File Exists")
-            return idnum[0]
-        else:
-            print("File Doesnt Exists")
-            return False
+    # def is_file_in_db_newlocation_delete(self, filename, md5hashpartial, filesize, md5hashtype="partial"):
+    #
+    #     if md5hashtype == "partial":
+    #         sql1 = '''SELECT fileID, filename,(tblRootDir.DirName || filedirlocal) as filedir FROM tblfilelisting
+    #                             inner join tblRootDir on tblfilelisting.rootDir = tblRootDir.ID
+    #                             WHERE filename=? AND md5hash_partial =? and filesize = ?'''
+    #     else:
+    #         sql1 = '''SELECT fileID, filename,(tblRootDir.DirName || filedirlocal) as filedir FROM tblfilelisting
+    #                             inner join tblRootDir on tblfilelisting.rootDir = tblRootDir.ID
+    #                             WHERE filename=? AND md5hash_full =? and filesize = ?'''
+    #
+    #     self.cursor.execute(sql1, (filename, md5hashpartial, filesize))
+    #     idnum = self.cursor.fetchone()
+    #     if idnum is not None:
+    #         print("File Exists")
+    #         return idnum[0]
+    #     else:
+    #         print("File Doesnt Exists")
+    #         return False
 
     def get_tree_values_delete(self, file_id):
 
@@ -840,27 +840,6 @@ class DBFileListing:
             return result[0]
         else:
             return False
-
-    def query_filter_output2list_delete(tag_id, db):
-            # Get Tags associated with this item from joining table
-            # Returns a list of categories in format to add to tree
-
-            cursorcategory = db.cursor()
-            categoryquery = ("select  tblTagFilters.Filter from tblTagFilters "
-                             "Inner Join tblTag2Filter "
-                             "on tblTag2Filter.FilterID =tblTagFilters.ID where tblTag2Filter.TagID=" + str(tag_id))
-
-            cursorcategory.execute(categoryquery)
-            allcategories = cursorcategory.fetchall()
-            allcats = ""
-            for item123 in allcategories:
-                    allcats = allcats + str(item123[0]) + ","
-            allcats = allcats[:-1]
-
-            # Do some converting from strings and stuff to get a new tuple
-            tempstring = list()
-            tempstring.append(allcats)
-            return tempstring
 
     def query_filter_from_tag_id(self, tag_id):
 
