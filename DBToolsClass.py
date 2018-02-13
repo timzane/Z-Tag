@@ -1048,6 +1048,7 @@ class DBFileListing:
         # Check if rootDir is in importDir
 
         rootDir = self.get_root_dir(root_dir_id)
+        print("Common Path:", os.path.commonpath(rootDir,importDir))
         if rootDir in (importDir + "/"):
             print("Check Good")
         else:
