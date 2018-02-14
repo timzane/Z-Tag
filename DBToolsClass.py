@@ -1043,17 +1043,40 @@ class DBFileListing:
             ctimesec = -1
         return (filesizef, mdhash, modtimesec, ctimesec)
 
+    def get_excluded_files(self):
+
+        # Get Tags associated with this item from joining table
+        query = "Select text from tblignorefiles"
+        self.cursor.execute(query)
+        ignorefiles = self.cursor.fetchall()
+        ignorelist = []
+        for ignorefile in ignorefiles:
+            ignorelist.append(ignorefile[0])
+        return ignorelist
+
+
+    def path_is_parent(self, parent_path, child_path):
+
+        parent_path = os.path.abspath(parent_path)
+        child_path = os.path.abspath(child_path)
+        return os.path.commonpath([parent_path]) == os.path.commonpath([parent_path, child_path])
+
     def import_filenames(self,  importDir, root_dir_id=None,dry_run=True,duplicate_check=True):
 
         # Check if rootDir is in importDir
 
         rootDir = self.get_root_dir(root_dir_id)
-        print("Common Path:", os.path.commonpath(rootDir,importDir))
-        if rootDir in (importDir + "/"):
+        print("Common Path:", os.path.commonpath([rootDir,importDir]))
+        # if rootDir in (importDir + "/"):
+
+        if self.path_is_parent(rootDir,importDir):
             print("Check Good")
         else:
             print("Root Dir and importDir are not compatible")
             return False
+
+        # Get Files to Ignore
+        exclude = self.get_excluded_files()
 
         # Initialize Variables for statistics
         total_record_count = 0
@@ -1061,19 +1084,14 @@ class DBFileListing:
         records_added = 0
 
         # This can be set to exclude directories, not implemented yet
-        # exclude = set(["ignorethisdirectory", "."])
-        exclude = {"ignore_this_directoryABCD", "."}
 
         # Begin walking through all directories
 
         for dirName, subdirList, fileList in os.walk(importDir, topdown=True, followlinks=False):
 
-            [subdirList.remove(d) for d in list(subdirList) if d in exclude]
-
-            # searchdir = dirName + "/"
             searchdir = dirName
-            print("Search Dir is: ", searchdir)
             fnamecount = 0
+            [fileList.remove(d) for d in list(fileList) if d in exclude]
             for fname in fileList:
                 total_record_count += 1
                 localdirname = dirName[len(rootDir):] + "/"
@@ -1087,7 +1105,6 @@ class DBFileListing:
 
                 fnamecount += 1
                 self.update_progress(fnamecount/len(fileList))
-                # print("Decision and Fileid",decision," ", file_id)
                 localdirname = dirName[len(rootDir):] + "/"
                 if decision == "Found":
                     # print("Found..Do Nothing")
