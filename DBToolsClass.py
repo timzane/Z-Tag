@@ -306,7 +306,7 @@ class DBFileListing:
                                 (olddir, oldfile, newdir,newfile))
             self.db.commit()
 
-    def rename_operation(self, olddir, oldfile, newdir,newfile):
+    def rename_operation(self, olddir, oldfile, newdir, newfile):
 
         old = os.path.join(olddir,oldfile)
         new = os.path.join(newdir,newfile)
@@ -365,16 +365,14 @@ class DBFileListing:
         recycledir = self.get_default_parameter("RecycleFolder")
 
         # Check to make sure file is there
-        flag = self.rename_operation(directory, filename, recycledir, filename)
+        flag = self.rename_operation(directory, filename, recycledir, filename+str(datetime.now()))
         if flag is True:
-            print("File exists deleting.+.+")
+            print("File deleted..removing from database")
             tree.delete(childtoremove)
             self.delete_row_filelistingdb(file_index)
             self.delete_all_tags(file_index)
-                    #  Remove tags code goes here
         else:
-            print("Error:", flag
-                  )
+            print("Error:", flag)
 
     def delete_all_tags(self, file_id):
 
@@ -915,8 +913,6 @@ class DBFileListing:
             for item in allcategories:
                     print("lool", item[0])
                     temp = item[0]
-
-                    print(type(allcats), type(temp))
                     allcats = allcats + [temp]
 
             print("AllCats before return", allcats)

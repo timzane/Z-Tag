@@ -324,8 +324,6 @@ class PageDuplicate(tk.Frame):
                 temparray = self.controller.tree.item(rows, "values")
                 file_index = str(temparray[0])
                 newcategories = self.controller.filedb.query_category_output2list_of_cat_index(file_index)
-
-                print(newcategories, type(newcategories))
                 if getallcategories is not None:
                     getallcategories = getallcategories + newcategories
                 else:
@@ -648,7 +646,6 @@ class PageFileOps(tk.Frame):
         self.renamedirentry.grid(column=0, row=3, columnspan = 6, sticky="ew", in_=self.batchrenamecontainer)
 
         load_filename = tk.Button(self.batchrenamecontainer, text='Load filename')
-        load_filename.bind('<Button-1>', self.delete_tagged)
         load_filename.grid(column=7, row=2, in_=self.batchrenamecontainer)
         load_filename.bind('<Button-1>',self.load_filename_entry)
 
@@ -657,7 +654,6 @@ class PageFileOps(tk.Frame):
         choosedir.bind('<Button-1>',self.choose_dir)
 
         load_dir = tk.Button(self.batchrenamecontainer, text='Load Dir')
-        load_dir.bind('<Button-1>', self.delete_tagged)
         load_dir.grid(column=8, row=3, in_=self.batchrenamecontainer)
         load_dir.bind('<Button-1>',self.load_dir_entry)
 
